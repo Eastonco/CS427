@@ -17,7 +17,7 @@
 
                 var message = {
                     who: await db.user(data).get('alias'),
-                    what: (await SEA.decrypt(data.what, key)) + '',
+                    what: data.what,
                     when: GUN.state.is(data, 'what'),
 
                 }
@@ -30,8 +30,7 @@
     })
 
     async function sendMessage() {
-        const secret = await SEA.encrypt(newMessage, '#foo');  
-        const message = user.get('all').set({what:secret});
+        const message = user.get('all').set({what:newMessage});
         const index = new Date().toISOString();
         db.get('chat').get(index).put(message);
         newMessage = '';
